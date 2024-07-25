@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distionary</title>
+    <style>
+        body{
+            align-items: center;
+        }
+        .box{
+           align-items: center;
+            margin: auto;
+            height: 150px;
+            
+            width: 300px;
+            border: 5px solid black;
+            border-radius: 20px;
+           
+        }
+        input{
+            margin-top: 30px;
+            margin-left: 50px;
+        }
+        button{
+            margin-top: 30px;
+            margin-left: 50px; 
+        }
+        h3{
+            margin-left: 50px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <input type="text" id="word" placeholder="Enter the word">
+        <br>
+        <button>See Meaning</button>
+        
+    </div>
+    <h3></h3>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+<script>
+    let  url="https://api.dictionaryapi.dev/api/v2/entries/en/";
+    let inp=document.querySelector("input");
+    let btn=document.querySelector("button");
+    let h3=document.querySelector("h3");
+    
+    btn.addEventListener("click",async()=>{
+      console.log("dfdas");
+        if(inp.value==""){
+            alert("please Enter a word");
+        }
+        else{
+            let q=inp.value;
+            let Meaning= await getmeaning(q);
+            h3.innerText=Meaning;
+            inp.value="";
+        }
+        
+      
+    })
+     async function getmeaning(word){
+            try{
+                let res=await axios.get(url+word);
+                return res.data[0].meanings[0].definitions[0].definition;
+            }catch(e){
+                h3.innerText="Wrong word please check the word";
+            }
+        }
+</script>
+</body>
+</html>
